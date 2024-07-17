@@ -1,0 +1,34 @@
+$fontWhite: #FFFFFF;
+$fontLight: #5F5F5F;
+$fontDark: #17171D;
+
+@mixin base-font-props($color, $weight, $size, $lineHeight, $style) {
+    font-weight: $weight;
+    font-style: $style;
+    font-size: $size;
+    line-height: $lineHeight;
+    color: $color;
+}
+
+@mixin font-space-grotesk($color, $weight, $size, $lineHeight, $style:"normal") {
+    font-family: "Space Grotesk", sans-serif;
+    @include base-font-props($color, $weight, $size, $lineHeight, $style)
+} 
+
+@mixin font-cormorant-infant($color, $weight, $size, $lineHeight, $style:"normal") {
+    font-family: "Cormorant Infant", serif;
+    @include base-font-props($color, $weight, $size, $lineHeight, $style)
+} 
+
+
+@mixin font-space-grotesk-sm-500($color) {
+    @include font-space-grotesk($color, 500, 13px, 19.5px);
+}   
+
+@mixin font-space-grotesk-xsm-300($color) {
+    @include font-space-grotesk($color, 300, 11px, 16.5px);
+}   
+
+@mixin font-cormorant-infant-lg-500($color) {
+    @include font-cormorant-infant($color, 500, 24.5px, 29.5px);
+}   
