@@ -11,12 +11,12 @@
 </template>
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
-import { TeamResourceData } from "@local-types/resources/teams";
+import { TeamDataResource } from "@local-types/resources/teams";
 import { TeamCard } from "@components/teamCard";
 import { AddButton } from "@components/buttons";
 import { getTeams, createTeam } from "@clients/teams";
 
-const teamData = ref<TeamResourceData[]>([]);
+const teamData = ref<TeamDataResource[]>([]);
 
 async function addNewTeam() {
   const created = await createTeam();

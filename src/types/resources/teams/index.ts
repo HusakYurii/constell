@@ -1,4 +1,4 @@
-export type TeamResourceData = {
+export type TeamDataResource = {
     iri: string,
     id: number,
     name: string,

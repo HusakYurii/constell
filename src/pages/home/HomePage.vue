@@ -8,7 +8,7 @@
 
 <script setup lang="ts">
 import { BasePageLayout } from "@components/pages";
-import { TeamCardsWidget } from "@widgets/teamCards";
+import { TeamCardsWidget } from "@widgets/teams";
 </script>
 
 <style scoped></style>

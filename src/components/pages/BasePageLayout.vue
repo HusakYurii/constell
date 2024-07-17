@@ -3,7 +3,7 @@
     <div class="w-14 h-full border-borderLight border-r-2">
       <div>Menu</div>
     </div>
-    <div class="w-full">
+    <div class="w-full overflow-y-scroll">
       <div class="h-[60px] flex items-center justify-between bg-backgroundDark">
         <BackButton />
         <p class="header-logo">Venue People</p>
