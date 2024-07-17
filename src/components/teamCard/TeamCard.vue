@@ -9,16 +9,20 @@
       ></div>
       <p class="ml-4 select-none">{{ data.name }}</p>
     </div>
-    <EditButton />
+    <EditButton @clicked="onEditClicked" />
   </div>
 </template>
 <script setup lang="ts">
 import { TeamCardProps } from "@local-types/components/teamCard";
 import { EditButton } from "@components/buttons";
 
-defineProps<{
+const props = defineProps<{
   data: TeamCardProps;
 }>();
+
+function onEditClicked() {
+  console.log(`Handle edit action for the team id: ${props.data.id}`);
+}
 </script>
 <style scoped lang="scss">
 p {

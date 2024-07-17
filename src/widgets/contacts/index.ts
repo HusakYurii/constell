@@ -1,4 +1,4 @@
-import ContactCardsWidgets from "./ContactCardsWidgets.vue"
+import ContactCardsWidget from "./ContactCardsWidget.vue"
 export {
-    ContactCardsWidgets
+    ContactCardsWidget
 }

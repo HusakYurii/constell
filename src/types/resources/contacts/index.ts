@@ -1,5 +1,4 @@
-export type UserAddressResource = {
-    iri: string;
+export type ContactAddressResource = {
     id: number,
     addressLineOne: string;
     addressLineTwo: string;
@@ -10,8 +9,7 @@ export type UserAddressResource = {
 };
 
 
-export type UserDataResource = {
-    iri: string;
+export type ContactDataResource = {
     id: number;
     fullName: string;
     displayName: string;
@@ -20,9 +18,9 @@ export type UserDataResource = {
     phoneNumber: string;
     phoneCountryPrefix: string;
     teamIds: number[];
-    image: string;
-    address: UserAddressResource;
+    image: string | null;
+    address: ContactAddressResource;
     isEmployee: boolean;
-    functionName: string;
+    role: string;
     userPermissions: []
 }

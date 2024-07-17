@@ -10,12 +10,12 @@ $fontDark: #17171D;
     color: $color;
 }
 
-@mixin font-space-grotesk($color, $weight, $size, $lineHeight, $style:"normal") {
+@mixin font-space-grotesk($color, $weight, $size, $lineHeight, $style: normal) {
     font-family: "Space Grotesk", sans-serif;
     @include base-font-props($color, $weight, $size, $lineHeight, $style)
 } 
 
-@mixin font-cormorant-infant($color, $weight, $size, $lineHeight, $style:"normal") {
+@mixin font-cormorant-infant($color, $weight, $size, $lineHeight, $style: normal) {
     font-family: "Cormorant Infant", serif;
     @include base-font-props($color, $weight, $size, $lineHeight, $style)
 } 
