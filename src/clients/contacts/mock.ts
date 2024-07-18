@@ -24,7 +24,7 @@ const users: ContactDataResource[] = [
             state: "",
         },
         isEmployee: true,
-        role: "1st Chef",
+        role: "First Chef",
         userPermissions: []
     },
     {

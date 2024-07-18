@@ -6,3 +6,12 @@
 *, * > * {
     user-select: none;
 }
+
+html {
+    overflow: hidden;
+    overflow-x: hidden;
+}
+::-webkit-scrollbar {
+    width: 0;  
+    background: transparent; 
+}

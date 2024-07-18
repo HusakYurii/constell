@@ -1,13 +1,11 @@
 import { defineStore } from "pinia";
-
-export const useStore = defineStore("counter", {
-    state: () => ({ count: 0, name: "Eduardo" }),
+/** I don't see any reasons to use it now, so I will leave it empty */
+export const useStore = defineStore("store", {
+    state: () => ({}),
     getters: {
-        doubleCount: (state) => state.count * 2,
+
     },
     actions: {
-        increment() {
-            this.count++;
-        },
+
     },
 });

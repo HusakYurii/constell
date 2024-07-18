@@ -1,7 +1,9 @@
 <template>
-  <div>Create Contact Page</div>
+  <BaseContactPage></BaseContactPage>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { BaseContactPage } from "../base";
+</script>
 
 <style scoped></style>
