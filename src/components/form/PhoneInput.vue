@@ -11,8 +11,8 @@
     <FormInput
       type="tel"
       name="phoneNumber"
-      :placeholder="currentPlaceholder"
-      :validation="currentValidation"
+      placeholder="XXXXXXXXXXXXXX"
+      validation="required|tel"
       v-model="phoneNumber"
       class="px-0 mt-6 w-3/4"
     />
@@ -20,31 +20,39 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
+import { ContactDataResource } from "@local-types/resources/contacts";
 import { FormInput } from "./";
 
-const placeholders: Record<string, string> = {
-  "+31": "2436111117",
-  "+380": "914811140",
-};
-const validation: Record<string, string> = {
-  "+31": "required|matches:/^[0-9]{9}$/",
-  "+380": "required|matches:/^[0-9]{9}$/",
-};
+type ModelValues = Pick<
+  ContactDataResource,
+  "phoneCountryPrefix" | "phoneNumber"
+>;
 
-const countryCode = ref("+31");
-const phoneNumber = ref("");
+const props = defineProps<ModelValues>();
+const emits = defineEmits<{
+  (e: "update:phoneCountryPrefix", data: string): void;
+  (e: "update:phoneNumber", data: string): void;
+}>();
+
+const countryCode = computed({
+  get() {
+    return props.phoneCountryPrefix;
+  },
+  set(newValue: string) {
+    emits("update:phoneCountryPrefix", newValue);
+  },
+});
+const phoneNumber = computed({
+  get() {
+    return props.phoneNumber;
+  },
+  set(newValue: string) {
+    emits("update:phoneNumber", newValue);
+  },
+});
 
 const countryCodes = ref(["+31", "+380"]);
-
-const currentPlaceholder = ref(placeholders[countryCode.value]);
-const currentValidation = ref(validation[countryCode.value]);
-
-watch(countryCode, (code) => {
-  currentPlaceholder.value = placeholders[code];
-  currentValidation.value = validation[code];
-  console.log(countryCode.value, phoneNumber.value);
-});
 </script>
 
 <style scoped></style>

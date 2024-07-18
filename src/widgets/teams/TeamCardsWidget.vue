@@ -11,6 +11,7 @@
 </template>
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
+import { toast } from "vue3-toastify";
 import { TeamDataResource } from "@local-types/resources/teams";
 import { TeamCard } from "@components/teamCard";
 import { AddButton } from "@components/buttons";
@@ -19,8 +20,13 @@ import { getTeams, createTeam } from "@clients/teams";
 const teamData = ref<TeamDataResource[]>([]);
 
 async function addNewTeam() {
-  const created = await createTeam();
-  teamData.value.push(created);
+  try {
+    const created = await createTeam();
+    teamData.value.push(created);
+    toast.success("Team created", { autoClose: 1000 });
+  } catch (error) {
+    toast.error("Action failed");
+  }
 }
 
 onMounted(() => {

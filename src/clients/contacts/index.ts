@@ -7,7 +7,7 @@ export const getContacts = async () => {
 }
 
 export const getContactById = async (id: number) => {
-    const response = await RestClient.get<ContactDataResource[]>(`/api/v1/contacts/${id}`);
+    const response = await RestClient.get<ContactDataResource>(`/api/v1/contacts/${id}`);
     return response.data;
 }
 

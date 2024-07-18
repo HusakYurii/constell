@@ -79,7 +79,7 @@ const users: ContactDataResource[] = [
 const parseIdFromURL = parseIdFromURLFactory(new RegExp("api/v1/contacts/(\\d+)"));
 
 export const attachMockForUsers = (mockAxiosInstance: MockAdapter) => {
-    mockAxiosInstance.onGet(new RegExp("/api/v1/contacts")).reply(() => {
+    mockAxiosInstance.onGet(new RegExp("/api/v1/contacts$")).reply(() => {
         return [200, users.map(cloneDeep)];
     });
 
@@ -94,7 +94,7 @@ export const attachMockForUsers = (mockAxiosInstance: MockAdapter) => {
     });
 
     mockAxiosInstance.onPost(new RegExp("/api/v1/contacts")).reply((config) => {
-        const data = config.data as Omit<ContactDataResource, "id">;
+        const data = JSON.parse(config.data).data as Omit<ContactDataResource, "id">;
 
         const id = Math.ceil(Math.random() * 1000000);
         const newUser: ContactDataResource = {
@@ -108,7 +108,7 @@ export const attachMockForUsers = (mockAxiosInstance: MockAdapter) => {
     });
 
     mockAxiosInstance.onPut(new RegExp("/api/v1/contacts")).reply((config) => {
-        const data = config.data as ContactDataResource;
+        const data = JSON.parse(config.data).data as ContactDataResource;
         const id = parseIdFromURL(config.url || "")
 
         const index = users.findIndex(user => user.id === id);

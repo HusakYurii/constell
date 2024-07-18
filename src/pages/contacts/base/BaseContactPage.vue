@@ -23,8 +23,8 @@
         <div class="w-full">
           <FormKit
             type="form"
-            :config="{ validationVisibility: 'submit' }"
             :actions="false"
+            messages-class="form-messages-custom"
             @submit="handleSubmit"
           >
             <div class="flex flex-col w-full md:flex-row">
@@ -35,6 +35,7 @@
                 placeholder="John Doe"
                 validation="required"
                 class="w-full md:w-1/2"
+                v-model="userData.fullName"
               />
               <FormInput
                 type="text"
@@ -43,6 +44,7 @@
                 placeholder="Y.O"
                 validation="required"
                 class="w-full md:w-1/2"
+                v-model="userData.initials"
               />
             </div>
             <FormInput
@@ -51,6 +53,7 @@
               label="Display name"
               placeholder="Johnny"
               class="w-full"
+              v-model="userData.displayName"
             />
             <FormInput
               type="text"
@@ -58,6 +61,7 @@
               label="Role"
               placeholder="Singer"
               class="w-full"
+              v-model="userData.role"
             />
             <div class="flex flex-col w-full md:flex-row">
               <FormInput
@@ -67,15 +71,26 @@
                 placeholder="email@here.com"
                 validation="required|email"
                 class="w-full md:w-1/2"
+                v-model="userData.email"
               />
-              <PhoneInput class="w-full md:w-1/2" />
+              <PhoneInput
+                class="w-full md:w-1/2"
+                v-model:phone-country-prefix="userData.phoneCountryPrefix"
+                v-model:phone-number="userData.phoneNumber"
+              />
             </div>
             <FormInput
               type="text"
-              name="street"
+              name="addressLineOne"
               label="Street"
-              placeholder=""
               class="w-full"
+              v-model="userData.address.addressLineOne"
+            />
+            <FormInput
+              type="text"
+              name="addressLineTwo"
+              class="w-full"
+              v-model="userData.address.addressLineTwo"
             />
             <div class="flex flex-col w-full md:flex-row">
               <FormInput
@@ -84,6 +99,7 @@
                 label="City"
                 placeholder=""
                 class="w-full md:w-1/2"
+                v-model="userData.address.city"
               />
               <FormInput
                 type="text"
@@ -91,6 +107,7 @@
                 label="Postal code"
                 placeholder=""
                 class="w-full md:w-1/2"
+                v-model="userData.address.postalCode"
               />
             </div>
             <FormInput
@@ -99,7 +116,14 @@
               label="Country"
               placeholder=""
               class="w-full"
+              v-model="userData.address.country"
             />
+            <div
+              class="flex flex-wrap w-full h-24 align-baseline content-center justify-center bg-backgroundLighter md:justify-end md:bg-backgroundLight"
+            >
+              <CancelButton class="mx-2" @clicked="routeUserBack" />
+              <SaveButton class="mx-2" @clicked="saveChanges" />
+            </div>
           </FormKit>
         </div>
       </div>
@@ -108,18 +132,52 @@
 </template>
 
 <script setup lang="ts">
+import { ref, watch } from "vue";
+import { useRouter } from "vue-router";
+import { ContactDataResource } from "@local-types/resources/contacts";
 import { BasePageLayout } from "@components/pages";
-import { FormInput, PhoneInput } from "@components/form";
+import {
+  FormInput,
+  PhoneInput,
+  SaveButton,
+  CancelButton,
+} from "@components/form";
 import { Avatar } from "@components/avatar";
 import { EditButton } from "@components/buttons";
 
-defineProps<{
+const props = defineProps<{
   isEditMode: boolean;
+  userData: ContactDataResource;
 }>();
 
-function handleSubmit(...args: any[]) {
-  console.log(args);
+const emits = defineEmits<{
+  (e: "saveData", data: ContactDataResource): void;
+}>();
+const router = useRouter();
+const userData = ref<ContactDataResource>(props.userData);
+
+watch(
+  () => props.userData,
+  (resource) => {
+    userData.value = resource;
+  },
+  { immediate: true }
+);
+
+function handleSubmit() {
+  emits("saveData", userData.value);
+}
+
+function saveChanges() {
+  emits("saveData", userData.value);
+}
+function routeUserBack() {
+  router.back();
 }
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.form-messages-custom {
+  visibility: hidden;
+}
+</style>

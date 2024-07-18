@@ -1,7 +1,6 @@
 import MockAdapter from "axios-mock-adapter";
 import { cloneDeep } from "lodash"
 import { TeamDataResource } from "@local-types/resources/teams";
-import { parseIdFromURLFactory } from "@clients/utils";
 
 const teams: TeamDataResource[] = [
     {
@@ -27,9 +26,6 @@ const teams: TeamDataResource[] = [
     }
 ];
 
-
-const parseIdFromURL = parseIdFromURLFactory(new RegExp("api/v1/teams/(\\d+)"));
-
 export const attachMockForTeams = (mockAxiosInstance: MockAdapter) => {
 
     mockAxiosInstance.onGet(new RegExp("/api/v1/teams")).reply(() => {
@@ -50,16 +46,4 @@ export const attachMockForTeams = (mockAxiosInstance: MockAdapter) => {
 
         return [201, cloneDeep(newTeam)];
     });
-
-    mockAxiosInstance.onGet(new RegExp("/api/v1/teams/\\d+")).reply(config => {
-        const id = parseIdFromURL(config.url || "")
-        const team = teams.find(team => team.id === id);
-
-        if (team) {
-            return [200, cloneDeep(team)];
-        } else {
-            return [404, { message: "Team not found" }];
-        }
-    });
-
 }

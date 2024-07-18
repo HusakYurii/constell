@@ -21,6 +21,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
+import { toast } from "vue3-toastify";
 import { ContactDataResource } from "@local-types/resources/contacts";
 import { AddButton } from "@components/buttons";
 import { ContactCard } from "@components/contactCard";
@@ -40,8 +41,13 @@ async function editItem(id: number) {
 }
 
 async function deleteItem(id: number) {
-  const result = await deleteContact(id);
-  contacts.value = contacts.value.filter((val) => val.id !== result.id);
+  try {
+    const result = await deleteContact(id);
+    contacts.value = contacts.value.filter((val) => val.id !== result.id);
+    toast.success("Contact deleted", { autoClose: 1000 });
+  } catch (error) {
+    toast.error("Action failed");
+  }
 }
 
 onMounted(async () => {
