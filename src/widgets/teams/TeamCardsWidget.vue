@@ -11,28 +11,29 @@
 </template>
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
-import { toast } from "vue3-toastify";
 import { TeamDataResource } from "@local-types/resources/teams";
 import { TeamCard } from "@components/teamCard";
 import { AddButton } from "@components/buttons";
 import { getTeams, createTeam } from "@clients/teams";
+import { useRequestWrapper } from "@shared/composables/useRequestWrapper";
 
 const teamData = ref<TeamDataResource[]>([]);
-
+const { wrapCall, wrapGetCall } = useRequestWrapper(
+  "Team created",
+  "Action failed"
+);
 async function addNewTeam() {
-  try {
-    const created = await createTeam();
-    teamData.value.push(created);
-    toast.success("Team created", { autoClose: 1000 });
-  } catch (error) {
-    toast.error("Action failed");
+  const response = await wrapCall(createTeam());
+  if (response) {
+    teamData.value.push(response);
   }
 }
 
-onMounted(() => {
-  getTeams().then((data) => {
-    teamData.value = data;
-  });
+onMounted(async () => {
+  const response = await wrapGetCall(getTeams());
+  if (response) {
+    teamData.value = response;
+  }
 });
 </script>
 <style scoped lang="scss">

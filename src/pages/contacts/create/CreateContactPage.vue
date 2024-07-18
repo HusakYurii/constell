@@ -10,11 +10,14 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { toast } from "vue3-toastify";
+import { useLoading } from "vue3-loading-overlay";
 import { ContactDataResource } from "@local-types/resources/contacts";
 import { createContact } from "@clients/contacts";
 import { BaseContactPage } from "../base";
+import { useRequestWrapper } from "@shared/composables/useRequestWrapper";
 
 const router = useRouter();
+const { wrapCall } = useRequestWrapper("Contact created", "Action failed");
 const emptyData = ref<ContactDataResource>({
   id: -1,
   fullName: "",
@@ -40,13 +43,9 @@ const emptyData = ref<ContactDataResource>({
 });
 
 async function onSaveData(data: ContactDataResource) {
-  try {
-    const result = await createContact(data);
-    await router.replace(`/contacts/${result.id}`);
-    toast.success("Contact created", { autoClose: 1000 });
-  } catch (error) {
-    toast.error("Action failed");
-  }
+  await wrapCall(createContact(data), (item) =>
+    router.replace(`/contacts/${item.id}`)
+  );
 }
 </script>
 

@@ -12,7 +12,7 @@
       type="tel"
       name="phoneNumber"
       placeholder="XXXXXXXXXXXXXX"
-      validation="required|tel"
+      validation="required|number"
       v-model="phoneNumber"
       class="px-0 mt-6 w-3/4"
     />
@@ -20,7 +20,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch } from "vue";
+import { computed, ref } from "vue";
 import { ContactDataResource } from "@local-types/resources/contacts";
 import { FormInput } from "./";
 

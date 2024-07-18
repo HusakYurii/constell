@@ -27,10 +27,12 @@ import { AddButton } from "@components/buttons";
 import { ContactCard } from "@components/contactCard";
 import { getContacts, deleteContact } from "@clients/contacts";
 import { getTeams } from "@clients/teams";
+import { useRequestWrapper } from "@shared/composables/useRequestWrapper";
 
 const contacts = ref<ContactDataResource[]>([]);
 const teamsColors = ref<Record<number, string>>({});
 const router = useRouter();
+const { wrapCall } = useRequestWrapper("Contact deleted", "Action failed");
 
 async function addNewUser() {
   router.push("/contacts/create");
@@ -41,12 +43,9 @@ async function editItem(id: number) {
 }
 
 async function deleteItem(id: number) {
-  try {
-    const result = await deleteContact(id);
+  const result = await wrapCall(deleteContact(id));
+  if (result) {
     contacts.value = contacts.value.filter((val) => val.id !== result.id);
-    toast.success("Contact deleted", { autoClose: 1000 });
-  } catch (error) {
-    toast.error("Action failed");
   }
 }
 

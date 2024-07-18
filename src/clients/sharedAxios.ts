@@ -8,7 +8,7 @@ import { attachMockForUsers } from "./contacts/mock"
    */
 if (true) {
     const mockAxiosInstance = new MockAdapter(axios, {
-        delayResponse: Math.random() * 200 + 100
+        delayResponse: Math.random() * 500 + 500
     });
 
     attachMockForUsers(mockAxiosInstance);

@@ -26,7 +26,9 @@
             :actions="false"
             messages-class="form-messages-custom"
             @submit="handleSubmit"
+            #messages="{ state }"
           >
+            {{ track(state.valid) }}
             <div class="flex flex-col w-full md:flex-row">
               <FormInput
                 type="text"
@@ -134,6 +136,7 @@
 <script setup lang="ts">
 import { ref, watch } from "vue";
 import { useRouter } from "vue-router";
+import { toast } from "vue3-toastify";
 import { ContactDataResource } from "@local-types/resources/contacts";
 import { BasePageLayout } from "@components/pages";
 import {
@@ -155,6 +158,7 @@ const emits = defineEmits<{
 }>();
 const router = useRouter();
 const userData = ref<ContactDataResource>(props.userData);
+let isValid = false;
 
 watch(
   () => props.userData,
@@ -164,15 +168,24 @@ watch(
   { immediate: true }
 );
 
-function handleSubmit() {
+function saveChanges() {
+  if (!isValid) {
+    toast.error("All required fields must be fille in");
+    return;
+  }
   emits("saveData", userData.value);
 }
 
-function saveChanges() {
-  emits("saveData", userData.value);
+function handleSubmit() {
+  saveChanges();
 }
+
 function routeUserBack() {
   router.back();
+}
+
+function track(isValidState: boolean) {
+  isValid = isValidState;
 }
 </script>
 

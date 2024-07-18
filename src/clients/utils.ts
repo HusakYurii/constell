@@ -4,4 +4,4 @@ export const parseIdFromURLFactory = (regExp: RegExp) => {
         const [_, id = "-1"] = matched;
         return parseInt(id, 10);
     }
-};
+}

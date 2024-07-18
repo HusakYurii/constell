@@ -5,7 +5,6 @@
       input-class="custom-input"
       label-class="custom-label"
       message-class="custom-message"
-      validation-visibility="live"
     />
   </div>
 </template>

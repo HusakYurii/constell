@@ -5,13 +5,16 @@
 <script setup lang="ts">
 import { ref, onBeforeMount } from "vue";
 import { useRoute } from "vue-router";
-import { toast } from "vue3-toastify";
 import { getContactById, updateContact } from "@clients/contacts";
 import { ContactDataResource } from "@local-types/resources/contacts";
 import { BaseContactPage } from "../base";
+import { useRequestWrapper } from "@shared/composables/useRequestWrapper";
 
 const route = useRoute();
-
+const { wrapCall, wrapGetCall } = useRequestWrapper(
+  "Contact updated",
+  "Action failed"
+);
 const userData = ref<ContactDataResource>({
   id: -1,
   fullName: "",
@@ -37,19 +40,21 @@ const userData = ref<ContactDataResource>({
 });
 
 async function onSaveData(data: ContactDataResource) {
-  try {
-    const result = await updateContact(data.id, data);
+  const result = await wrapCall(updateContact(data.id, data));
+  if (result) {
     userData.value = result;
-    toast.success("Contact updated", { autoClose: 1000 });
-  } catch (error) {
-    toast.error("Action failed");
   }
 }
 
 onBeforeMount(async () => {
   if (!Array.isArray(route.params.id)) {
-    const data = await getContactById(parseInt(route.params.id, 10));
-    userData.value = data;
+    const result = await wrapGetCall(
+      getContactById(parseInt(route.params.id, 10))
+    );
+
+    if (result) {
+      userData.value = result;
+    }
   }
 });
 </script>
