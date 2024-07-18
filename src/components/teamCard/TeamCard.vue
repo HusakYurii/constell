@@ -1,6 +1,6 @@
 <template>
   <div
-    class="h-20 w-full md:w-80 p-4 my-1 flex items-center justify-between rounded bg-teamCardBackgroundLight md:m-1"
+    class="h-20 w-full md:w-80 p-4 my-1 flex items-center justify-between rounded bg-backgroundLighter md:m-1"
   >
     <div class="flex items-center">
       <div

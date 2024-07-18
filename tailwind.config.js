@@ -4,9 +4,9 @@ export default {
     theme: {
         extend: {
             backgroundColor: {
+                backgroundLighter: "#EFEFEF",
                 backgroundLight: "#e2e2e2",
                 backgroundDark: "#282829",
-                teamCardBackgroundLight: "#EFEFEF",
             },
             borderColor: {
                 borderLight: "#D2D2D2",

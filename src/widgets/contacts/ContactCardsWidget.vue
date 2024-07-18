@@ -10,6 +10,7 @@
         :is-first-child="i === 0"
         :is-last-child="i === contacts.length - 1"
         @delete="deleteItem"
+        @clicked="editItem"
       />
     </div>
     <div>
@@ -32,6 +33,10 @@ const router = useRouter();
 
 async function addNewUser() {
   router.push("/contacts/create");
+}
+
+async function editItem(id: number) {
+  router.push(`/contacts/${id}`);
 }
 
 async function deleteItem(id: number) {

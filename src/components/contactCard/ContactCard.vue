@@ -1,13 +1,16 @@
 <template>
   <div
-    class="h-20 w-full p-4 flex items-center justify-between border-borderLight border-2 border-b-0 bg-teamCardBackgroundLight"
+    class="h-20 w-full p-4 flex items-center justify-between border-borderLight border-2 border-b-0 bg-backgroundLighter"
     :class="{
       'border-b-2': isLastChild,
       'rounded-t-xlg': isFirstChild,
       'rounded-b-xlg': isLastChild,
     }"
   >
-    <div class="flex items-center w-full">
+    <div
+      class="flex items-center w-full cursor-pointer"
+      @click="$emit('clicked', data.id)"
+    >
       <Avatar class="w-10 h-10" />
       <div class="flex flex-col w-full pl-3 pr-4 items-center md:flex-row">
         <div class="flex flex-row w-full items-center md:w-1/2">
@@ -54,9 +57,11 @@ defineProps<{
 
 defineEmits<{
   (e: "delete", id: number): void;
+  (e: "clicked", id: number): void;
 }>();
 
 async function copyText(event: Event) {
+  event.stopPropagation();
   copyToClipboard((event.target as HTMLElement).innerText);
 }
 </script>

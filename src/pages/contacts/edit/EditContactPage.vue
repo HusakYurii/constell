@@ -1,7 +1,9 @@
 <template>
-  <div>Edit Contact Page</div>
+  <BaseContactPage :is-edit-mode="true"></BaseContactPage>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { BaseContactPage } from "../base";
+</script>
 
 <style scoped></style>

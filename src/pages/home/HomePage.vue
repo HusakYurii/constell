@@ -1,8 +1,8 @@
 <template>
-  <BasePageLayout>
+  <BasePageLayout title="Venue People" :hide-menu-bar-for-mobile="false">
     <template #pre-content>
       <div class="h-20 w-full">
-        <!-- Since I have nothing here in the mock, I assume here is some pre-content because of the space left-->
+        <!-- I hve nothing here but the mock shows the space here. It seems there should be some pre content-->
       </div>
     </template>
     <template #content>

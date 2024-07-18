@@ -1,5 +1,5 @@
 <template>
-  <BaseContactPage></BaseContactPage>
+  <BaseContactPage :is-edit-mode="false"></BaseContactPage>
 </template>
 
 <script setup lang="ts">

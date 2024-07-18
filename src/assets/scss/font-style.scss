@@ -1,8 +1,11 @@
 $fontWhite: #FFFFFF;
 $fontLight: #5F5F5F;
 $fontDark: #17171D;
+$fontRed: #f80000;
 $backgroundDark: #282829;
 $backgroundLight: #e2e2e2;
+$borderLight: #D2D2D2;
+$borderDark: #17171D;
 
 @mixin base-font-props($color, $weight, $size, $lineHeight, $style) {
     font-weight: $weight;
@@ -22,6 +25,14 @@ $backgroundLight: #e2e2e2;
     @include base-font-props($color, $weight, $size, $lineHeight, $style)
 } 
 
+
+@mixin font-space-grotesk-md-400($color) {
+    @include font-space-grotesk($color, 400, 16px, 23px);
+} 
+
+@mixin font-space-grotesk-sm-300($color) {
+    @include font-space-grotesk($color, 300, 13px, 19.5px);
+} 
 
 @mixin font-space-grotesk-sm-500($color) {
     @include font-space-grotesk($color, 500, 13px, 19.5px);

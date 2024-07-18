@@ -5,7 +5,7 @@
     <div class="w-full overflow-y-scroll">
       <div class="h-[60px] flex items-center justify-between bg-backgroundDark">
         <BackButton />
-        <p class="header-logo">Venue People</p>
+        <p class="header-logo">{{ title }}</p>
         <p class="placeholder">empty</p>
       </div>
       <div class="px-1 py-2 md:px-4 lg:px-8 w-full content-height">
@@ -19,7 +19,9 @@
     </div>
     <div
       class="w-full h-14 border-borderDark border-t-2 md:border-borderLight md:border-r-2 md:w-14 md:h-full"
-      :class="`flex flex-col content-center items-center justify-between`"
+      :class="`flex flex-col content-center items-center justify-between ${
+        hideMenuBarForMobile ? 'hidden md:flex' : ''
+      }`"
     >
       <div class="hidden md:block mt-10 mb-24">
         <Icon class="w-8 h-12" :src="Logo" />
@@ -28,7 +30,7 @@
         class="relative w-full h-full flex flex-row content-center items-center justify-around md:justify-start md:flex-col"
       >
         <Icon
-          v-for="(src, i) in centerIcons"
+          v-for="src in centerIcons"
           class="w-8 h-8 md:w-5 md:h-5 md:mb-10"
           :class="{ 'position-center-for-mobile': src === Stars }"
           :src="src"
@@ -63,6 +65,11 @@ import { Icon } from "@components/icon";
 
 const centerIcons = [Calendar, Stars, Account, CurrencyPound, Pentagon];
 const bottomIcons = [Info, Search];
+
+defineProps<{
+  title: string;
+  hideMenuBarForMobile: boolean;
+}>();
 </script>
 
 <style lang="scss" scoped>
